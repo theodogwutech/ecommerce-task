@@ -1,0 +1,28 @@
+{
+  "name": "ecommerce-task",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "test": "mocha"
+  },
+  "keywords": [],
+  "author": "Valentine Offiah",
+  "license": "ISC",
+  "dependencies": {
+    "basic-auth": "^2.0.1",
+    "body-parser": "^1.20.2",
+    "chai": "^4.3.9",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mocha": "^10.4.0",
+    "mongodb": "^6.6.2"
+  },
+  "devDependencies": {
+    "@types/chai-http": "^4.2.0",
+    "chai-http": "^4.4.0",
+    "standard": "^17.1.0"
+  }
+}
