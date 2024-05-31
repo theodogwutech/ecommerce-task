@@ -28,7 +28,7 @@ describe("Order Items API", () => {
         });
 
         orderItem = await db.collection("orderitems").insertOne({
-            order_item_id: "ojojwovownvowngjnvn0jw020p",
+            order_item_id: 34,
             product_id: "1e9e8ef04dbcff4541ed2665jqofjwognowno",
             seller_id: "oiJjoqjof839u02402ir0ncqxinj092u09u40",
             price: 100,
@@ -43,9 +43,7 @@ describe("Order Items API", () => {
         await db
             .collection("products")
             .deleteOne({ product_id: "1e9e8ef04dbcff4541ed2665jqofjwognowno" });
-        await db
-            .collection("orderitems")
-            .deleteOne({ order_item_id: "ojojwovownvowngjnvn0jw020p" });
+        await db.collection("orderitems").deleteOne({ order_item_id: 34 });
     });
 
     it("should list order items", (done) => {
@@ -56,7 +54,7 @@ describe("Order Items API", () => {
                 expect(res).to.have.status(200);
                 expect(res.body.data).to.be.an("array");
                 expect(res.body.data[0]).to.include({
-                    id: "ojojwovownvowngjnvn0jw020p",
+                    id: 34,
                     product_id: "1e9e8ef04dbcff4541ed2665jqofjwognowno",
                     product_category: "perfumaria",
                     price: 100,
@@ -65,12 +63,39 @@ describe("Order Items API", () => {
             });
     });
 
-    it("should delete an order item", (done) => {
+    it("should get a single order item", (done) => {
         chai.request(app)
-            .delete(`/orderitems/${orderId}`)
+            .get(`/orderitems/1e9e8ef04dbcff4541ed2665jqofjwognowno/${34}`)
             .auth("oiJjoqjof839u02402ir0ncqxinj092u09u40", 54321)
             .end((err, res) => {
-                expect(res).to.have.status(204);
+                expect(res).to.have.status(200);
+                expect(res.body).to.include({
+                    id: 34,
+                    product_id: "1e9e8ef04dbcff4541ed2665jqofjwognowno",
+                    product_category: "perfumaria",
+                    price: 100,
+                });
+                done();
+            });
+    });
+
+    it("should update an order item", (done) => {
+        chai.request(app)
+            .put(`/orderitems/1e9e8ef04dbcff4541ed2665jqofjwognowno/${34}`)
+            .auth("oiJjoqjof839u02402ir0ncqxinj092u09u40", 54321)
+            .send({ price: 200, date: new Date() })
+            .end((err, res) => {
+                expect(res).to.have.status(201);
+                done();
+            });
+    });
+
+    it("should delete an order item", (done) => {
+        chai.request(app)
+            .delete(`/orderitems/1e9e8ef04dbcff4541ed2665jqofjwognowno/${34}`)
+            .auth("oiJjoqjof839u02402ir0ncqxinj092u09u40", 54321)
+            .end((err, res) => {
+                expect(res).to.have.status(200);
                 done();
             });
     });

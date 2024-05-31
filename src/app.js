@@ -1,11 +1,15 @@
 import express from "express";
 import bodyParser from "body-parser";
+import cors from "cors";
 import orderItemsRoutes from "./routes/orderItems.js";
 import accountRoutes from "./routes/account.js";
 import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
+
+app.use(cors({ origin: "*" }));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
